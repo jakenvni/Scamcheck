@@ -29,7 +29,7 @@ function renderHistoryList() {
         itemButton.innerText = `🕒 ${shortText}`;
         itemButton.onclick = function() {
             if (typeof showResultOnUI === "function") {
-                showResultOnUI(item.result, item.text);
+                showResultOnUI(item.result);
             }
         };
         historyContainer.appendChild(itemButton);
