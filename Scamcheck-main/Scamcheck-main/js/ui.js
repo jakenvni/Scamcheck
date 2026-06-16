@@ -43,8 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (button) {
         button.addEventListener("click", async () => {
-            const message = document.getElementById("messageInput").value;
-            if (!message.trim()) {
+            const messageInput = document.getElementById("messageInput");
+            if (!messageInput) return;
+            
+            const message = messageInput.value.trim();
+            if (!message) {
                 if (resultContainer) resultContainer.innerHTML = "⚠️ Vui lòng nhập nội dung tin nhắn.";
                 return;
             }
@@ -52,13 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (resultContainer) resultContainer.innerHTML = "⏳ Đang phân tích...";
 
             try {
-                const analysis = await analyzeMessage(message);
-                if (typeof saveToHistory === "function") {
-                    saveToHistory(message, analysis);
+                if (typeof analyzeMessage === "function") {
+                    const analysis = await analyzeMessage(message);
+                    if (typeof saveToHistory === "function") {
+                        saveToHistory(message, analysis);
+                    }
+                    showResultOnUI(analysis);
+                } else {
+                    if (resultContainer) resultContainer.innerHTML = "❌ Lỗi: Không tìm thấy hàm phân tích tin nhắn.";
                 }
-                showResultOnUI(analysis);
             } catch (error) {
-                if (resultContainer) resultContainer.innerHTML = `❌ ${error.message}`;
+                if (resultContainer) resultContainer.innerHTML = `❌ Lỗi hệ thống: ${error.message}`;
             }
         });
     }
