@@ -7,4 +7,23 @@ function showResultOnUI(result, originalText) {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderHistoryList();
+
+    const checkBtn = document.getElementById('checkBtn');
+    const messageInput = document.getElementById('messageInput');
+
+    if (checkBtn && messageInput) {
+        checkBtn.addEventListener('click', async () => {
+            const text = messageInput.value.trim();
+            if (!text) return;
+
+            const mockResult = {
+                risk_level: "Cao",
+                scam_signs: [],
+                recommended_actions: []
+            };
+
+            saveToHistory(text, mockResult);
+            showResultOnUI(mockResult, text);
+        });
+    }
 });
