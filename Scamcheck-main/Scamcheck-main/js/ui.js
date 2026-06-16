@@ -6,7 +6,9 @@ function showResultOnUI(result, originalText) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderHistoryList();
+    if (typeof renderHistoryList === "function") {
+        renderHistoryList();
+    }
 
     const checkBtn = document.getElementById('checkBtn');
     const messageInput = document.getElementById('messageInput');
@@ -22,7 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 recommended_actions: []
             };
 
-            saveToHistory(text, mockResult);
+            if (typeof saveToHistory === "function") {
+                saveToHistory(text, mockResult);
+            }
             showResultOnUI(mockResult, text);
         });
     }
