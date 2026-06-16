@@ -28,7 +28,9 @@ function renderHistoryList() {
         const shortText = item.text.length > 40 ? item.text.substring(0, 40) + '...' : item.text;
         itemButton.innerText = `🕒 ${shortText}`;
         itemButton.onclick = function() {
-            showResultOnUI(item.result, item.text); 
+            if (typeof showResultOnUI === "function") {
+                showResultOnUI(item.result, item.text);
+            }
         };
         historyContainer.appendChild(itemButton);
     });
